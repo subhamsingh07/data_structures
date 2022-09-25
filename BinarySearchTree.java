@@ -339,6 +339,36 @@ public class BinarySearchTree
 	}
 	void balance()
 	{
-		//to be continued
+		balance_node(root);
+	}
+	private void delete_node_data(BST root)
+	{
+		if(root.left==null&&root.right==null)
+			root=null;
+		if(root.left!=null)
+		{
+			BST temp=leftmost(root.left);
+			deletenode(root,temp.data);
+			root.data=temp.data;
+		}
+		else
+		{
+			BST temp=rightmost(root.right);
+			deletenode(root,temp.data);
+			root.data=temp.data;
+		}
+	}
+	private void balance_node(BST root)
+	{
+		if(root==null)
+			return;
+		while(Math.abs(height(root.left)-height(root.right))>=2)
+		{
+			int data=root.data;
+			delete_node_data(root);
+			add(root,data);
+		}
+		balance_node(root.left);
+		balance_node(root.right);
 	}
 }
